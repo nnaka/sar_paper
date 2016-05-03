@@ -1,0 +1,9 @@
+\section{Future Work}\label{sec:futurework}
+
+\begin{itemize}
+  \item Requires large amounts of RAM (10s to 100s of GB)  as algorithm must keep entire pulse history in memory
+    \subitem Could map disk and focus the pulse history partially for memory constrained systems
+  \item Memory requirements could also be reduced by pre-selecting a representative portion of the image and autofocusing only the subset
+  \item Add support for multiple GPUs (fairly straightforward)
+  \item Explore OpenMP and thread pooling to avoid overhead of thread spawning
+\end{itemize}

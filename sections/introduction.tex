@@ -1,0 +1,18 @@
+\section{Introduction}\label{sec:introduction}
+
+\begin{itemize}
+  \item SAR images are used in applications
+  \item Due to inherent errors, autofocus is often used to produce clearer images
+  \item Efficient algorithms based on PGA have been developed (citation) but for some applications these methods are insufficient
+  \item Ash (citation) details a gradient descent algorithm which, while much more computationally complex, can yield better results
+  \item Ian and Colin generalized this technique to three dimensional SAR images but have major performance bottlenecks
+  \item Their work used a brute force algorithm which, while effective, was very complex, slow, and implemented in MATLAB
+\end{itemize}
+
+\subsection{Contributions}
+
+\begin{itemize}
+  \item This work contributes two parallel algorithms for minimizing image entropy as a function of the image pulse history
+  \item C++ multithreaded implementation (on CPU)
+  \item CUDA implementation (on GPU)
+\end{itemize}
