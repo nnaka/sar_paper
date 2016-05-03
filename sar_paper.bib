@@ -1,41 +1,135 @@
-% This is an example .bib file for paper citations.
+@inproceedings{koo2005comparison,
+  title={A comparison of autofocus algorithms for SAR imagery},
+  author={Koo, Voon Chet and Lim, Tien Sze and Chuah, Hean Teik},
+  booktitle={Proc. of the Progress In Electromagnetics Research Symp.(Hangzhou, China), PIERS Online},
+  volume={1},
+  pages={16--9},
+  year={2005},
+  comment    = {In this paper, the authors, from Malaysia's Multimedia
+    University, provide both summaries of and comparisons between various
+    autofocus algorithms for SAR images. Although focusing on two dimensional
+    SAR, experience suggests that the principles discussed are applicable to three
+    dimensional image formation as well. This paper serves as background to
+    conduct deeper research into the mathematical tenants of each autofocus
+    algorithm as well as for a succinct mathematical statement of the autofocus
+    problem itself.}
+}
 
-% Citation for a paper in a conference proceedings.
-@inproceedings{nesc-pldi03,
-  title={The {nesC} Language: {A} Holistic Approach to Networked Embedded 
-  Systems}, 
-  author="David Gay and Phil Levis and Rob von Behren and Matt Welsh and 
-  Eric Brewer and David Culler", 
-  booktitle=proc # " Programming Language Design and Implementation (PLDI)",
-  month="June", year=2003}
+@inproceedings{kragh2009minimum,
+  title={Minimum-entropy autofocus for three-dimensional SAR imaging},
+  author={Kragh, Thomas J},
+  booktitle={SPIE Defense, Security, and Sensing},
+  pages={73370B--73370B},
+  year={2009},
+  organization={International Society for Optics and Photonics},
+	comment = {This paper, also written by Thomas Kragh, a similar autofocus
+    technique to his paper, ``Monotonic Iterative Algorithm for
+      Minimum-Entropy Autofocus'' but includes more mathematical rigor and
+      background. It also works with 3D SAR which may affect the final
+      analysis of the autofocus algorithm.}
+}
 
-% Citation for a journal paper.
-@article{shewchuk-delaunay,
-  author="Jonathan Shewchuk",
-  title="Delaunay Refinement Algorithms for Triangular Mesh Generation",
-  journal="Computational Geometry: Theory and Applications",
-  volume="22", number="1-3", pages="21-74", month="May", year="2002"}
+@article{ash2012autofocus,
+  title={An autofocus method for backprojection imagery in synthetic aperture radar},
+  author={Ash, Joshua N},
+  journal={Geoscience and Remote Sensing Letters, IEEE},
+  volume={9},
+  number={1},
+  pages={104--108},
+  year={2012},
+  publisher={IEEE},
+		comment = {This paper embodies the core of our autofocus routine. It was
+      fundamental in developing the existing brute force algorithm used in
+        initial testing. Specifically, Ash proposes a maximization technique for
+    image sharpness which we can readily compare to minimization of image
+    entropy. This paper corroborates the mathematical foundations of Kragh's
+    paper and contributes a few optimization techniques which will be discussed.}
+}
 
-% Citation for a tech report.
-@techreport{irisnet-tr,
-  title="{IrisNet}: {A}n Architecture for Enabling Sensor-Enriched {I}nternet Service",
-  author="Suman Nath and Yan Ke and Phillip B. Gibbons and Brad Karp and Srinivasan Seshan",
-  institution="Intel Research Pittsburgh",
-  number="IRP-TR-03-04", month="June", year="2003"}
+@ARTICLE{Ager,
+		author = {T.P. Ager},
+		title = {An introduction to Synthetic Aperture Radar Imaging},
+		journal = {Oceanography},
+    volume = {26},
+    number = {2},
+    pages = {20-33},
+    year = {2013},
+		comment = {This paper supplies exemplary background information on SAR in
+      general. It does not speak specifically to autofocus techniques but will
+        be instrumental in providing research background of the uses and
+        challenges associated with SAR. The source appears to be credible due to
+    the publication in which it was published as well as an extensive reference
+    list.}
+}
 
-% Citation for a book.
-@book{mpi-book,
-  author="William Gropp and Ewing Lusk and Anthony Skjellum", 
-  title={{Using MPI: Portable Parallel Programming with the Message 
-  Passing Interface}}, 
-  publisher="MIT Press", 
-  address="Cambridge, Massachusetts", 
-  year="1994"}
+@inproceedings{kragh2006monotonic,
+  title={Monotonic iterative algorithm for minimum-entropy autofocus},
+  author={Kragh, Thomas J},
+  booktitle={Adaptive Sensor Array Processing (ASAP) Workshop],(June 2006)},
+  year={2006},
+	comment = {This paper provides thorough analysis of a entropy minimization
+    technique for SAR images. This both serves as the foundation for our MATLAB code
+      (at present) as well as conveys a clear analysis of this particular
+      autofocus technique. Written by a BAE Systems group, we consider it
+      reputable. The document will serve as a primary source for one of the
+      autofocus techniques compared in the review.}
+}
 
-% Citation for a Web site, company, or other document that does not
-% fit one of the above.
-@misc{estrin-contaminant,
-  author={{Center for Embedded Network Sensing}},
-  title="Contaminant Transport Monitoring",
-  howpublished={\url{http://cens.ucla.edu/Research/Applications/ctm.htm}}}
+@article{wahl1994phase,
+  title={Phase gradient autofocus-a robust tool for high resolution SAR phase correction},
+  author={Wahl, DE and Eichel, PH and Ghiglia, DC and Jakowatz Jr, CV},
+  journal={Aerospace and Electronic Systems, IEEE Transactions on},
+  volume={30},
+  number={3},
+  pages={827--835},
+  year={1994},
+  publisher={IEEE},
+	comment = {This paper provides a broad summary of the ``gold standard'' phase
+    gradient algorithm for image autofocus. By focusing on the overall steps (to
+        demonstrate their necessity) the paper explains very simply the concepts
+      behind phase gradient autofocus. Therefore, it will be instrumental in
+      understanding and summarizing the background of this technique for our
+      paper. Further, the article is highly credible with the four authors all
+      highly accomplished electrical engineering doctorate holders from schools
+      such as Purdue and California State Polytechnic University. Further, the
+      articles countless citations since 1994 (253) speak to its utility.}
+}
 
+@article{morrison2007sar,
+  title={SAR image autofocus by sharpness optimization: A theoretical study},
+  author={Morrison, Robert L and Do, Minh N and Munson, David C},
+  journal={Image Processing, IEEE Transactions on},
+  volume={16},
+  number={9},
+  pages={2309--2321},
+  year={2007},
+  publisher={IEEE},
+  comment = {This paper provides a concise statement of the SAR image formation
+    and autofocus problem.} 
+}
+
+@inproceedings{yegulalp1999fast,
+  title={Fast backprojection algorithm for synthetic aperture radar},
+  author={Yegulalp, Ali F},
+  booktitle={Radar Conference, 1999. The Record of the 1999 IEEE},
+  pages={60--65},
+  year={1999},
+  organization={IEEE}
+}
+
+@article{Eichel:89, 
+  author = {P. H. Eichel and D. C. Ghiglia and C. V. Jakowatz}, 
+  journal = {Opt. Lett.}, 
+  keywords = {},
+  number = {1}, 
+  pages = {1--3}, 
+  publisher = {OSA},
+  title = {Speckle processing method for synthetic-aperture-radar phase correction}, 
+  volume = {14}, 
+  month = {Jan},
+  year = {1989},
+  url = {http://ol.osa.org/abstract.cfm?URI=ol-14-1-1},
+  doi = {10.1364/OL.14.000001},
+  comment = {Uncompensated phase errors present in synthetic-aperture-radar data can have a disastrous effect on reconstructed image quality. We present a new iterative algorithm that holds promise of being a robust estimator and corrector for arbitrary phase errors. Our algorithm is similar in many respects to speckle processing methods currently used in optical astronomy. We demonstrate its ability to focus scenes containing large amounts of phase error regardless of the phase-error structure or its source. The algorithm works extremely well in both high and low signal-to-clutter conditions without human intervention.},
+}
+  
