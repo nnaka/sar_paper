@@ -13,6 +13,24 @@
     GPUs, number of processes and image size.}
 }
 
+@INPROCEEDINGS{ssa_to_pga, 
+  author={R. L. J. Morrison and D. C. J. Munson}, 
+  booktitle={Image Processing. 2002. Proceedings. 2002 International Conference on}, 
+  title={An experimental study of a new entropy-based SAR autofocus technique}, 
+  year={2002}, 
+  volume={2}, 
+  pages={II-441-II-444 vol.2}, 
+  keywords={computational complexity;entropy;focusing;image restoration;minimisation;radar imaging;synthetic aperture radar;SAR imaging;entropy-based SAR autofocus technique;image deblurring;phase gradient autofocus algorithm;stage by stage approaching entropy minimization;synthetic aperture radar;Demodulation;Electronics packaging;Entropy;Image reconstruction;Layout;Modems;Phase estimation;Radar imaging;Synthetic aperture radar;Testing}, 
+  doi={10.1109/ICIP.2002.1039982}, 
+  ISSN={1522-4880}, 
+  month={},
+  comment={Compares a potentially effective autofocus algorithm (SSA) to PGA,
+    concluding that it is up to 10x slower. They attempt to optimize it but
+    do not succeed in signficantly improving execution time. An interesting
+    optimization is the removely of the entropy "normalization" step. We may be
+    able to do something similar.}
+}
+
 @ARTICLE{303752, 
   author={D. E. Wahl and P. H. Eichel and D. C. Ghiglia and C. V. Jakowatz}, 
   journal={IEEE Transactions on Aerospace and Electronic Systems}, 
@@ -27,6 +45,24 @@
   month={Jul}
 }
 
+@ARTICLE{less_mem_high_eff_autofocus, 
+  author={K. Hu and X. Zhang and S. He and H. Zhao and J. Shi}, 
+  journal={IEEE Geoscience and Remote Sensing Letters}, 
+  title={A Less-Memory and High-Efficiency Autofocus Back Projection Algorithm for SAR Imaging}, 
+  year={2015}, 
+  volume={12}, 
+  number={4}, 
+  pages={890-894}, 
+  keywords={atmospheric turbulence;error compensation;measurement errors;motion compensation;nonlinear equations;optimisation;position measurement;radar antennas;radar computing;radar imaging;synthetic aperture radar;APC;MEC;antenna phase centers;autofocus BP algorithm;back projection algorithm;inertial measurement unit;maximum image sharpness;measurement error;minority pixel selection;motion error compensation;nonlinear equations;optimization method;phase error estimation;synthetic aperture radar;time-domain imaging method;trajectory measurement;turbulence;wind field;Azimuth;Imaging;Memory management;Optimization methods;Radar polarimetry;Synthetic aperture radar;Trajectory;Autofocus;back projection (BP);motion error compensation (MEC);synthetic aperture radar (SAR)}, 
+  doi={10.1109/LGRS.2014.2365612}, 
+  ISSN={1545-598X}, 
+  month={April},
+  comment={Based on Ash's work, this paper uses less pixels to reduce
+    computational complexity. They present radar parameters as a table -- we
+    should consider doing this. Performance results are strictly in comparison
+    to Ash's work and are weak and not very quantitative or convincing.}
+}
+
 @inproceedings{gpu-sar, 
   author={C. Passerone and C. Sansoè and R. Maggiora}, 
   booktitle={2014 IEEE Aerospace Conference}, 
@@ -39,7 +75,8 @@
   month={March},
   comment={GPU / CUDA implementation of two SAR autofocus algorithms
     (Range-Doppler and w-k). Presented execution time as a table with values for
-  each stage of processing.}
+  each stage of processing. Compares performance to CosmoSkyMed official
+  toolchain}
 }
 
 @inproceedings{koo2005comparison,
