@@ -36,8 +36,9 @@
 \title{\ttlfnt{GPU Accelerated Entropy Minimization for 3D SAR Images}}
 
 % Author names, affiliations, and e-mail below
-\author{Norihito Naka\\norihito.naka@tufts.edu
-\and Joshua Pfosi\\joshua.pfosi@tufts.edu}
+\author{Joshua Pfosi\\joshua.pfosi@tufts.edu
+\and Norihito Naka\\norihito.naka@tufts.edu
+\and Eric Miller\\eric.miller@tufts.edu}
 
 \maketitle
 %\copyrightspace
@@ -45,7 +46,15 @@
 
 \subsection*{Abstract}
 \begin{small}
-  This is an abstract.
+  Synthetic aperture radar (SAR) imagery has many applications for
+  reconnaissance and disaster relief.  As applications proliferate, the need for
+  efficient processing of SAR data grows. A ubiquitous step in SAR image
+  formation is autofocus. Much research has explored effective and efficient
+  methods for autofocus with varying degrees of success. This paper builds upon
+  these efforts by providing efficient implementations of one such algorithm
+  using parallel architectures.  Both a parallel CPU as well as GPU
+  implementation are compared to a standard MATLAB implementation yielding a
+  significant improvement in performance.
 \end{small}
 
 \input{sections/introduction}
@@ -57,8 +66,6 @@
 \input{sections/acknowledgements}
 
 \begin{small}
-% TODO: Remove `\nocite{*)` after actually citing a paper
-\nocite{*}
 \bibliographystyle{abbrv} \bibliography{sar_paper}
 \end{small}
 
