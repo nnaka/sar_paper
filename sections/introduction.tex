@@ -1,18 +1,43 @@
 \section{Introduction}\label{sec:introduction}
 
-\begin{itemize}
-  \item SAR images are used in applications
-  \item Due to inherent errors, autofocus is often used to produce clearer images
-  \item Efficient algorithms based on PGA have been developed (citation) but for some applications these methods are insufficient
-  \item Ash (citation) details a gradient descent algorithm which, while much more computationally complex, can yield better results
-  \item Ian and Colin generalized this technique to three dimensional SAR images but have major performance bottlenecks
-  \item Their work used a brute force algorithm which, while effective, was very complex, slow, and implemented in MATLAB
-\end{itemize}
+Synthetic aperture radar has many applications for reconnaissance and disaster
+relief. The images can pierce smoke, cloud cover or other atmospheric
+interference, and provide their own illumination and so work well at all times
+of the day.  SAR processing is composed of two high level operations: image
+formation and focusing. Image formation involves collecting radar and positional
+data and, via one of a variety of signal processing algorithms, form a coherent
+phase history.  This history, however, is subject to unknown errors due to
+inaccuracies in the positional system as well as atmospheric propagation
+delays~\cite{ash2012autofocus}. The focusing step, therefore, attempts to
+correct these errors by modeling them as some unknown phase shift, $\phi$, for
+each pulse. Thus, this step seeks a set of phase offsets which yields the most
+focused image. Finding such a set has been well researched with many techniques
+in the literature~\cite{kragh2006monotonic,
+ash2012autofocus, kragh2009minimum, wahl1994phase, morrison2007sar, Eichel:89,
+less_mem_high_eff_autofocus}. This work builds upon the minimum-entropy
+autofocus technique proposed in~\cite{kragh2006monotonic} by developing highly
+parallelized implementations of the gradient descent algorithm discussed.
+
+% As
+% shown by Ash~\cite{ash2012autofocus}, more common autofocus techniques such as
+% PGA, suffer from a reliance on critical assumptions. This paper presents efficient implementations
+% of an autofocus technique compatible with backprojection. This more general image
+
+The remainder of this paper is organized as follows.
+Section~\ref{sec:relatedwork} details the related literature and provides
+context for this paper. Sections~\ref{sec:implementation} and~\ref{sec:results}
+describe the general implementation techniques and optimizations employed and
+the performance results we obtained, respectively. Section~\ref{sec:futurework}
+discusses the need for continued optimizations and improvements. Finally, we
+conclude in the last section.
 
 \subsection{Contributions}
 
-\begin{itemize}
-  \item This work contributes two parallel algorithms for minimizing image entropy as a function of the image pulse history
-  \item C++ multithreaded implementation (on CPU)
-  \item CUDA implementation (on GPU)
-\end{itemize}
+This work contributes two implementations of the gradient descent entropy
+minimization autofocus algorithm for SAR images and compares their efficacy to
+current solutions in the literature. A tuned C++ implementation which runs on a
+scalable number of native CPU threads demonstrates over $50x$ improvement in
+performance compared to a MATLAB implementation. Also, we measured a CUDA-based
+GPU implementation, exploiting the regular parallelism of the gradient
+computation. We achieved as much as an $80x$ improvement in performance for
+various pulse history sizes.
