@@ -1,5 +1,15 @@
 \section{Related Work}\label{sec:relatedwork}
 
-\begin{itemize}
-  \item TBD
-\end{itemize}
+SAR image processing is a computationally burdensome task. Many researches have
+developed techniques to optimize both image formation and autofocus techniques.
+In particular, many papers have been written exploring optimizations to the
+image formation technique~\cite{yegulalp1999fast, hartley, liu, clemente, fasih, jin,
+park2013efficient}. Many use GPUs or multiple cores to achieve better
+performance. Significantly less work has been done on autofocus techniques.
+Passerone \textit{et al.} propose a CUDA based GPU implementation of two
+autofocus algorithms, Range-Doppler and $\omega$-k with promising
+results~\cite{gpu-sar}. Other work, such as~\cite{less_mem_high_eff_autofocus},
+uses less of the image to obtain phase estimates. This reduces time and space
+complexity but at the cost of efficacy. This work continues in the direction set
+by~\cite{gpu-sar} by applying parallel architectures to a different autofocus
+technique: gradient descent.
