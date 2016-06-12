@@ -1,9 +1,24 @@
 \section{Future Work}\label{sec:futurework}
 
-\begin{itemize}
-  \item Requires large amounts of RAM (10s to 100s of GB)  as algorithm must keep entire pulse history in memory
-    \subitem Could map disk and focus the pulse history partially for memory constrained systems
-  \item Memory requirements could also be reduced by pre-selecting a representative portion of the image and autofocusing only the subset
-  \item Add support for multiple GPUs (fairly straightforward)
-  \item Explore OpenMP and thread pooling to avoid overhead of thread spawning
-\end{itemize}
+This work contributes two demonstrably efficient implementations of the
+autofocus techniques described by Ash~\cite{ash2012autofocus} and
+Kragh~\cite{kragh2006monotonic}. We are, however, continuing to
+build upon this work to decrease execution time and improve efficacy. There are
+two directions in which we can improve our technique: algorithmic changes and
+standard program optimization techniques. The former has two potential
+solutions. First, we used a course step size estimation technique to execute
+gradient descent, however, the execution time may be significantly reduced by
+employing more sophisticated techniques. Also,
+as~\cite{less_mem_high_eff_autofocus} shows, we may obtain performance gains by
+exploring a smaller portion of the image if we make assumptions about the phase
+delays introduced by the SAR collection platform. The latter direction, standard
+program optimization, also provides some low hanging fruit. The GPU solution is
+currently bandwidth constrained. Techniques such as memory mapping could
+significantly reduce time spent copying data from host to GPU and back. This is
+our current area of focus. Also, as both our implementations are highly
+scalable, exploring enterprise GPU farms such as those provided by Amazon Cloud
+Services~\cite{aws} could simultaneously improve performance and alleviate the
+memory restrictions. Finally, our multithreaded solution suffers from thread
+creation and tear-down overhead which could be eliminated by
+OpenMP~\cite{openmp} or other thread pooling library. We are currently looking
+at all these options.
