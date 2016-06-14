@@ -59,29 +59,23 @@
 %\copyrightspace
 \thispagestyle{empty}
 
-\subsection*{Abstract}
-\begin{small}
-  Synthetic aperture radar (SAR) imagery has many applications for
-  reconnaissance and disaster relief.  As applications proliferate, the need for
-  efficient processing of SAR data grows. A ubiquitous step in SAR image
-  formation is autofocus. Much research has explored effective and efficient
-  methods for autofocus with varying degrees of success. This paper builds upon
-  these efforts by providing efficient implementations of one such algorithm
-  using parallel architectures.  Both a parallel CPU as well as GPU
-  implementation are compared to a standard MATLAB implementation yielding a
-  significant improvement in performance.
+\subsection*{Abstract} \begin{small} Synthetic Aperture Radar (SAR) imagery has
+  many applications such as reconnaissance and disaster relief.  Due to the
+  importance of speedy information gathering in these applications, the need
+  for efficient processing of SAR data grows. A ubiquitous step in SAR image
+  formation is autofocus. While previous research has explored effective and
+  efficient methods for autofocus, this paper builds upon these works by
+  providing efficient implementations of one such algorithm--minimum entropy
+  gradient descent--using parallel architectures.  Both a parallel CPU as well
+  as GPU implementation are compared to a standard MATLAB implementation
+  yielding a significant improvement in performance.
 \end{small}
 
-\input{sections/introduction}
-\input{sections/relatedwork}
-\input{sections/implementation}
-\input{sections/results}
-\input{sections/futurework}
-\input{sections/conclusions}
+\input{sections/introduction} \input{sections/relatedwork}
+\input{sections/implementation} \input{sections/results}
+\input{sections/futurework} \input{sections/conclusions}
 
-\begin{small}
-\bibliographystyle{abbrv} \bibliography{sar_paper}
-\end{small}
+\begin{small} \bibliographystyle{abbrv} \bibliography{sar_paper} \end{small}
 
 \end{document}
 
