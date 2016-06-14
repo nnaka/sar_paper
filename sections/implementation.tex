@@ -66,7 +66,7 @@ $\gb \equiv \nabla H(\phib^{l})$ via the following algorithm:
   \ \\
   \For{$i = 1,2,\dots, K$}{
     $H_i \gets H(\phib^l+\delta \times \eb_i)$\\
-    $\gb_i \gets (H_i - H_0)/\delta$\\
+    $g_i \gets (H_i - H_0)/\delta$\\
   }
   \ \\
   \Return $\gb$
@@ -77,19 +77,24 @@ The above computes the finite difference approximation to the gradient. By
 iterating this recursive formulation until the image entropy converges, the
 complex image can be computed via Eq.~\ref{eq:phase_complex_image} to yield a
 focused image.
- 
+
 We exploit the data parallelism inherent in Alg.~\ref{alg:finitediff} in both
 our reference MATLAB as well as C++ and CUDA implementations. Transitioning to a
 C++ based solution offers much more efficient and finegrained thread control and
 reduced memory footprint. Also, the performance difference between C++ and
-MATLAB is well known. The greatest optimization, however, came from the
-``reuse'' of the image computed for $H_0$ in the first step of
-Alg.~\ref{alg:finitediff}. As shown by Eq.~\ref{eq:phase_complex_image}
-and~\ref{eq:entropy}, computing $H_0$ requires $\zb(\phib^l)$ as an
-intermediary value. In principle, this intermediary is distinct for each $H_k$,
-but can be expressed by a function of $\phib^l$ and $\delta$. That is, for each
-iteration of Alg.~\ref{alg:finitediff}, a given $\phi_{i}$ is offset by $\delta$.
-Substituting into Eq.~\ref{eq:phase_complex_image} yields $z'_n$:
+MATLAB is well known. The next two subsections discuss the optimizations we
+employed to improve performance and reduce complexity. 
+ 
+\subsection{Reusing $\zb_{0}$}
+
+The primary optimization we developed came from the ``reuse'' of the image
+computed for $H_0$ in the first step of Alg.~\ref{alg:finitediff}. As shown by
+Eq.~\ref{eq:phase_complex_image} and~\ref{eq:entropy}, computing $H_0$ requires
+$\zb(\phib^l)$ as an intermediary value. In principle, this intermediary is
+distinct for each $H_k$, but can be expressed by a function of $\phib^l$ and
+$\delta$. That is, for each iteration of Alg.~\ref{alg:finitediff}, a given
+$\phi_{i}$ is offset by $\delta$.  Substituting into
+Eq.~\ref{eq:phase_complex_image} yields $z'_n$:
 
 \begin{equation}\label{eq:z_prime}
   \begin{split}
@@ -108,6 +113,8 @@ per iteration of Alg.~\ref{alg:finitediff} for $NK$ operations plus an
 additional $NK$ operations to compute $H_0$, resulting in a complexity of only
 $\Theta(NK)$.
 
+\subsection{Reducing Memory Constraints}
+
 Additionally, the expression for $H$ can be implemented more efficiently as:
 
 \begin{equation}\label{eq:eff_entropy}
@@ -117,5 +124,10 @@ Additionally, the expression for $H$ can be implemented more efficiently as:
 In this form, Eq.~\ref{eq:eff_entropy} can be computed incrementally, building the
 two summations concurrently as $\zb$ is evaluated. This allows the input phase
 history to be partitioned at an arbitrary number of pixels, $N' \le N$, to match
-the memory constraints of the system. This was critical for the tight memory
-limits of the GPU.
+the memory constraints of the system. We can, therefore, accumulate the summation
+term and $E_z$ as each partition is processed. This was critical for the tight memory
+limits of the GPU when image sizes exceeded the 2 GB of main memory. As
+discussed in~\cite{gpu-sar} and shown by our results in
+Section~\ref{sec:results}, the overhead of these data transfers can reduce
+performance and so reducing the size of required temporary arrays alleviates
+this issue.
