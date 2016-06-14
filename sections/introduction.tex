@@ -1,27 +1,28 @@
 \section{Introduction}\label{sec:introduction}
 
-Synthetic aperture radar has many applications for reconnaissance and disaster
-relief. The images can pierce smoke, cloud cover or other atmospheric
-interference, and provide their own illumination and so work well at all times
-of the day.  SAR processing is composed of two high level operations: image
-formation and focusing. Image formation involves collecting radar and positional
-data and, via one of a variety of signal processing algorithms, form a coherent
-phase history.  This history, however, is subject to unknown errors due to
-inaccuracies in the positional system as well as atmospheric propagation
-delays~\cite{ash2012autofocus}. The focusing step, therefore, attempts to
-correct these errors by modeling them as some unknown phase shift, $\phi$, for
-each pulse. Thus, this step seeks a set of phase offsets which yields the most
-focused image. Finding such a set has been well researched with many techniques
-in the literature~\cite{kragh2006monotonic,
-ash2012autofocus, kragh2009minimum, wahl1994phase, morrison2007sar, Eichel:89,
+Synthetic Aperture Radar (SAR) has many applications such as reconnaissance and
+disaster relief. Smoke, cloud cover, or other atmospheric interference that
+traditionally obscure airborne images do not impact SAR images.  Moreover,
+since SAR images provide their own illumination, they work well at all hours. 
+SAR image processing is composed of two high level operations: image formation
+and focusing. Image formation involves collecting radar and positional data
+and, via a signal processing algorithms, form a coherent phase history.  This
+history, however, is subject to unknown errors due to inaccuracies in the
+positional system as well as atmospheric propagation
+delays~\cite{ash2012autofocus}. The focusing step attempts to correct these
+errors by modeling them as some unknown phase shift, $\phi$, for each pulse
+and, thereby, determine a set of phase offsets which yields the most focused
+image, measured by entropy. Finding such a set has been well researched with
+many techniques in the literature~\cite{kragh2006monotonic, ash2012autofocus,
+kragh2009minimum, wahl1994phase, morrison2007sar, Eichel:89,
 less_mem_high_eff_autofocus}. This work builds upon the minimum-entropy
 autofocus technique proposed in~\cite{kragh2006monotonic} by developing highly
 parallelized implementations of the gradient descent algorithm discussed.
 
-% As
-% shown by Ash~\cite{ash2012autofocus}, more common autofocus techniques such as
-% PGA, suffer from a reliance on critical assumptions. This paper presents efficient implementations
-% of an autofocus technique compatible with backprojection. This more general image
+% As shown by Ash~\cite{ash2012autofocus}, more common autofocus techniques
+% such as PGA, suffer from a reliance on critical assumptions. This paper
+% presents efficient implementations of an autofocus technique compatible with
+% backprojection. This more general image
 
 The remainder of this paper is organized as follows.
 Section~\ref{sec:relatedwork} details the related literature and provides
@@ -36,8 +37,22 @@ conclude in the last section.
 This work contributes two implementations of the gradient descent entropy
 minimization autofocus algorithm for SAR images and compares their efficacy to
 current solutions in the literature. A tuned C++ implementation which runs on a
-scalable number of native CPU threads demonstrates over $50x$ improvement in
+scalable number of native CPU threads demonstrates over $50\times$ improvement in
 performance compared to a MATLAB implementation. Also, we measured a CUDA-based
 GPU implementation, exploiting the regular parallelism of the gradient
-computation. We achieved as much as an $80x$ improvement in performance for
-various pulse history sizes.
+computation. We achieved as much as an $80\times$ improvement in performance
+for various pulse history sizes.
+
+\subsection{GPUs and CUDA}
+
+Graphic Processing Unit (GPU), interfaced via Input/Output commands and DMA
+memory transfers, can be used to accelerate Central Processing Unit (CPU)
+computations through taking advantage of its parallel processor cores, of
+which it often has more than hundreds compared to the less than one hundred
+seen in powerful CPUs. Each GPU contains multiprocessors which, in turn, house
+these cores and SRAM, or shared memory. In executing a threaded computation,
+each core within a multiprocessor handles a single thread on different sets of
+data. Low latency context switches between execution and suspension of threads
+leads to efficient and effective completion of computations.
+
+Compute Unified Device Architecture (CUDA) is used to execute 
