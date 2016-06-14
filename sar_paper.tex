@@ -5,7 +5,6 @@
 % rather than '.pdf', and probably get rid of the hyperref package.
 
 \documentclass{article}
-\usepackage{program}
 \usepackage{acm-style10} % ACM proceedings formatting
 \usepackage{times}       % Use Adobe Times font set
 \usepackage{epsfig,twocolumn}
@@ -19,6 +18,17 @@
 \usepackage[labelformat=simple]{subcaption}
 \renewcommand\thesubfigure{(\alph{subfigure})}
 \graphicspath{{./figures/}}
+
+\usepackage{amsmath}
+\usepackage{algorithm2e}
+\usepackage{bm} % for math bold
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\phib}{\vec{\phi}}
+\newcommand{\eb}{\vec{e}}
+\newcommand{\gb}{\vec{g}}
+\newcommand{\zb}{\vec{z}}
+\newcommand{\alphab}{\vec{\alpha}}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 % DO NOT EDIT THE BELOW BLOCK OF CODE
 \def\dsp{\def\baselinestretch{1.10}}
