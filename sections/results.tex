@@ -11,7 +11,7 @@ $25^{\circ}$ of azimuth with about 119 pulses per degree from the eighth pass.
 As the available data set has been focused, we introduce phase errors in the
 form of zero mean white Gaussian noise with a standard deviation of $\pi$
 radians applied directly to each pulse in the phase history.
-Figure~\ref{fig:efficacy} depicts the results: The ideal image is shown
+Fig.~\ref{fig:efficacy} depicts the results: The ideal image is shown
 in~\subref{fig:ideal}, the noise-injected image in~\subref{fig:unfocused} and the
 result of focusing in~\subref{fig:focused}.
 
@@ -61,7 +61,7 @@ possessed 4 Intel i5 cores at 3.3 GHz.
 
 The first experiment sought to characterize the performance scalability as a
 function of input size. We measured the execution time as more degrees azimuth
-were swept added to the phase history. Figure~\ref{fig:speedup} depicts the
+were swept added to the phase history. Fig.~\ref{fig:speedup} depicts the
 relative performance improvement for both the multithreaded CPU solution as well
 as the GPU based solution. As shown, the GPU solution consistently surpasses the
 CPU-only implementation until $9^{\circ}$ of azimuth or $1075$ pulses. Here, the
@@ -83,7 +83,7 @@ input sizes.
 
 The second experiment aimed to explore the gradient descent's performance
 tolerance as more noise was introduced into the phase history.
-Figure~\ref{fig:noise} depicts the normalized execution time of the
+Fig.~\ref{fig:noise} depicts the normalized execution time of the
 autofocus algorithms for $3^{\circ}$ of azimuth as the added noise varies
 between $0$ and $3\pi$ radians. The data is normalized against zero added noise.
 As can be seen from the graph, both implementations are relatively robust to
