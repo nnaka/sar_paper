@@ -8,7 +8,7 @@ PDFS = $(addsuffix .pdf,$(TARGETS))
 
 all: $(PDFS)
 
-%.pdf: %.tex %.bib %.blg %.toc $(TEXFILES) sections/*
+%.pdf: %.tex %.bib %.blg %.toc $(TEXFILES) sections/* figures/*
 	pdflatex $*.tex
 	bibtex $*
 	pdflatex $*.tex

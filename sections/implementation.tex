@@ -23,11 +23,14 @@ $\phib = \{\phi_1, \phi_2, \dots \phi_k\}$. Applying this to
 Eq.~\ref{eq:complex_image} yields:
 
 \begin{equation}\label{eq:phase_complex_image}
-z_n = \sum_{i=1}^{k} b_{i,n}e^{-j\phi_i}
+z_n = \sum_{i=1}^{K} b_{i,n}e^{-j\phi_i}
 \end{equation}
 
-The goal of gradient descent autofocus is to optimize over a image quality
-metric. We use image entropy, defined as~\cite{kragh2006monotonic}:
+Therefore, $\zb(\phib)$ represents a phase-corrected image. For notational
+consistency, we will adopt Kragh's~\cite{kragh2006monotonic} convention of
+assuming $\zb$ is a function of $\phib$.  The goal of gradient descent autofocus
+is to optimize over a image quality metric. We use image entropy, defined
+as~\cite{kragh2006monotonic}:
 
 \begin{equation}\label{eq:entropy}
   H(\zb) = \sum_{n=1}^{N} \frac{|z_n|^2}{E_z} \ln
@@ -35,26 +38,26 @@ metric. We use image entropy, defined as~\cite{kragh2006monotonic}:
   \text{,\indent} E(\zb) = \sum_{n=1}^{N} |z_n|^2.
 \end{equation}
 
-In Eq.~\ref{eq:entropy}, $\zb$ is a complex image, and $E_z$ is
-the total image energy. We therefore seek:
+In Eq.~\ref{eq:entropy}, $\zb$ is the backprojected image, and $E_z$ is the
+total image energy. We therefore seek:
 
 \begin{equation}\label{eq:arg_min}
   \vec{\hat{\phi}} = \argmin(H(\zb(\phib)))
 \end{equation}
 
 Eq.~\ref{eq:arg_min} has no closed form solution~\cite{ash2012autofocus}. As
-mentioned we employ gradient descent optimization. That is, we minimize the
-objective function, $H$, first by forming an approximation to its gradient,
-$\nabla H$. Next, we iterate down the negation of the gradient to find a
-minimum. Therefore, the $l$-th iteration can be expressed as:
+mentioned we employ gradient descent. The $l$-th iteration can be expressed as:
 
 \begin{equation}\label{eq:recursion}
-  \phib^l = \phib^{l-1} - s \nabla H(\zb(\phib^{l-1}))
+  \phib^{(l)} = \phib^{(l-1)} - s \nabla H(\zb^{(l-1)})
 \end{equation}
 
-where $s$ is a scalar step size and the gradient of $H$ is with respect to
-$\phib$. Eq.~\ref{eq:recursion} is evaluated by approximating the gradient
-$\gb \equiv \nabla H(\phib^{l})$ via the following algorithm:
+where $s$ is a scalar step size, and $\phib^{(l)}$, $\zb^{(l-1)}$ and $\nabla
+H(\zb^{(l-1)})$ are the phase estimates, phase-corrected image, and gradient of
+the entropy with respect to the phase estimates for the $l$-th and $l-1$-th
+iterations, respectively.  In this paper we employ a finite difference
+approximation to $H$ computed using the following algorithm:
+
 
 \begin{algorithm}
   \caption{Finite difference approximation of $\gb$}
@@ -62,10 +65,10 @@ $\gb \equiv \nabla H(\phib^{l})$ via the following algorithm:
   Let $\eb_i$ be the $i$-th column of a $K \times K$ identity matrix.\\
   Let $\delta$ be some small offset.\\
   \ \\
-  $H_0 \gets H(\zb(\phib^l))$\\
+  $H_0 \gets H(\zb(\phib^{(l)}))$\\
   \ \\
   \For{$i = 1,2,\dots, K$}{
-    $H_i \gets H(\phib^l+\delta \times \eb_i)$\\
+    $H_i \gets H(\zb(\phib^{(l)}+\delta \eb_i))$\\
     $g_i \gets (H_i - H_0)/\delta$\\
   }
   \ \\
@@ -74,9 +77,22 @@ $\gb \equiv \nabla H(\phib^{l})$ via the following algorithm:
 \end{algorithm}
 
 The above computes the finite difference approximation to the gradient. By
-iterating this recursive formulation until the image entropy converges, the
+iterating Eq.~\ref{eq:recursion} until the image entropy converges, the
 complex image can be computed via Eq.~\ref{eq:phase_complex_image} to yield a
 focused image.
+
+In particular, the step size, $s$, is initialized to an empirical constant value
+of 100. As the minimization proceeds, should the entropy increase, $s$ is halved
+and that iteration is repeated. This process continues until the algorithm
+terminates due to one of two conditions:
+
+\begin{itemize}
+  \item The relative change in entropy is less than $10^{-3}$.
+  \item The step size is less than $10^{-2}$.
+\end{itemize}
+
+The convergence threshold was determined empirically and is consistent with
+values from other authors.
 
 We exploit the data parallelism inherent in Alg.~\ref{alg:finitediff} in both
 our reference MATLAB as well as C++ and CUDA implementations. Transitioning to a
@@ -90,21 +106,20 @@ employed to improve performance and reduce complexity.
 The primary optimization we developed came from the ``reuse'' of the image
 computed for $H_0$ in the first step of Alg.~\ref{alg:finitediff}. As shown by
 Eq.~\ref{eq:phase_complex_image} and~\ref{eq:entropy}, computing $H_0$ requires
-$\zb(\phib^l)$ as an intermediary value. In principle, this intermediary is
-distinct for each $H_k$, but can be expressed by a function of $\phib^l$ and
-$\delta$. That is, for each iteration of Alg.~\ref{alg:finitediff}, a given
-$\phi_{i}$ is offset by $\delta$.  Substituting into
-Eq.~\ref{eq:phase_complex_image} yields $z'_n$:
+$\zb_{0} \equiv \zb(\phib)$ as an intermediary value. In principle, $H_i$
+requires computation of $\zb' \equiv \zb(\phib + \delta \eb_{i})$, but this can
+be more efficiently expressed as a function of $\zb_{0}$ and $\delta$.
+Substituting into Eq.~\ref{eq:phase_complex_image} yields $z'_n$:
 
 \begin{equation}\label{eq:z_prime}
   \begin{split}
-    z'_n = z_n + b_{i,n}e^{-j(\phi_{i} + \delta)} - b_{i,n}e^{-j\phi_{i}} \\ =
-    z_n + b_{i,n}e^{-j\phi_{i}}(e^{-j\delta} - 1)
+    z'_n &= z_n + b_{i,n}e^{-j(\phi_{i} + \delta)} - b_{i,n}e^{-j\phi_{i}} \\
+    &= z_n + b_{i,n}e^{-j\phi_{i}}(e^{-j\delta} - 1)
   \end{split}
 \end{equation}
 
 Let $\alpha_{i} = e^{-j\phi_{i}}(e^{-j\delta} - 1)$. Thus, for each $H_i$, we
-can express $\zb_{i} = \zb_{0} + \alpha_{i} \vec{b}_i$. Without this
+can express $\zb' = \zb_{0} + \alpha_{i} \vec{b}_i$. Without this
 optimization, Alg.~\ref{alg:finitediff} took $K$ iterations, each of which
 summed over $N$ pixels, each requiring $K$ operations to evaluate, for a bound
 of $\Theta(NK^2)$. Using this technique, a given pixel $z_i$ can be computed in
@@ -121,13 +136,13 @@ Additionally, the expression for $H$ can be implemented more efficiently as:
   H(\zb) = \frac{1}{E_z}(\sum_{n=1}^{N} |z_n|^2 \ln |z_n|^2 - E_z \ln E_z)
 \end{equation}
 
-In this form, Eq.~\ref{eq:eff_entropy} can be computed incrementally, building the
-two summations concurrently as $\zb$ is evaluated. This allows the input phase
-history to be partitioned at an arbitrary number of pixels, $N' \le N$, to match
-the memory constraints of the system. We can, therefore, accumulate the summation
-term and $E_z$ as each partition is processed. This was critical for the tight memory
-limits of the GPU when image sizes exceeded the 2 GB of main memory. As
-discussed in~\cite{gpu-sar} and shown by our results in
+In this form, Eq.~\ref{eq:eff_entropy} can be computed incrementally, building
+the two summations concurrently as $\zb$ is evaluated. This allows the input
+backproject pulses to be partitioned at an arbitrary number of pixels, $N' \le
+N$, to match the memory constraints of the system. We can, therefore, accumulate
+the summation term and $E_z$ as each partition is processed. This was critical
+for the tight memory limits of the GPU when image sizes exceeded the 2 GB of
+main memory. As discussed in~\cite{gpu-sar} and shown by our results in
 Section~\ref{sec:results}, the overhead of these data transfers can reduce
 performance and so reducing the size of required temporary arrays alleviates
 this issue.

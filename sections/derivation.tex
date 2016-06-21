@@ -1,0 +1,41 @@
+\onecolumn
+\appendix
+\section{Derivation of $\nabla H$ (closed form)}\label{derivation}
+
+\begin{equation}\label{eq:|z_n|^2}
+\begin{split}
+{\left|z_{n}\right|}^{2} & = (\sum_{i=1}^{K} b_{i,n}e^{-j\phi_{i}})(\sum_{i=1}^{K} b_{i,n}e^{-j\phi_{i}})^* \\
+& =(\Re{[z_n]}+\Im{[z_n]})(\Re{[z_n]}-\Im{[z_n]})\\
+& =\Re{[z_n]}^2+\Im{[z_n]}^2\\
+& =(\sum_{i=1}^{K} \Re{[b_{i,n}e^{-j\phi_i}]})^2-(\sum_{i=1}^{K} \Im{[b_{i,n}e^{-j\phi_i}]})^2
+\end{split}
+\end{equation}
+
+\begin{equation}\label{eq:rectangular}
+b_{i,n}=\alpha_{i,n}+j\beta_{i,n}
+\end{equation}
+
+\begin{equation}\label{eq:d|z_n|^2/dphi}
+\begin{split}
+\frac{\partial {\left|z_{n}\right|}^{2}}{\partial \phi_{i}} & = \frac{\partial}{\partial \phi_{i}}[\alpha_{i,n}cos(\phi_{i})+\beta_{i,n}sin(\phi_{i})]^2-\frac{\partial}{\partial \phi_{i}}[\beta_{i,n}cos(\phi_{i})-\alpha_{i,n}sin(\phi_{i})]^2 \\
+& =2(\alpha_{i,n}cos(\phi_{i})+\beta_{i,n}sin(\phi_{i}))(\beta_{i,n}cos(\phi_{i})-\alpha_{i,n}sin(\phi_{i}))-2(\beta_{i,n}cos(\phi_{i})-\alpha_{i,n}sin(\phi_{i}))(-\beta_{i,n}sin(\phi_{i})-\alpha_{i,n}cos(\phi_{i})) \\
+& =4(\alpha_{i,n}cos(\phi_{i})+\beta_{i,n}sin(\phi_{i}))(\beta_{i,n}cos(\phi_{i})-\alpha_{i,n}sin(\phi_{i}) \\
+\end{split}
+\end{equation}
+
+\begin{equation}\label{eq:h}
+h \equiv 4(\alpha_{i,n}cos(\phi_{i})+\beta_{i,n}sin(\phi_{i}))(\beta_{i,n}cos(\phi_{i})-\alpha_{i,n}sin(\phi_{i}))
+\end{equation}
+
+\begin{equation}\label{eq:H}
+H(\phi)=-\frac{\sum_{n=1}^{N} \left|z_{n}\right|^2\ln{\left|z_{n}\right|}^2}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}-\ln{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}
+\end{equation}
+
+\begin{equation}\label{eq:dH/dphi}
+\begin{split}
+\frac{\partial H}{\partial \phi_{i}} & = -\frac{\partial}{\partial \phi_{i}}\frac{\sum_{n=1}^{N} \left|z_{n}\right|^2\ln{\left|z_{n}\right|}^2}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}-\frac{\partial}{\partial \phi_{i}}\ln{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}} \\
+& =-\frac{\sum_{n=1}^{N} \frac{\partial {\left|z_{n}\right|}^{2}}{\partial \phi_{i}}}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}-[-(\sum_{n=1}^{N} {\left|z_{n}\right|}^{2})^{-2}(\sum_{n=1}^{N} \frac{\partial {\left|z_{n}\right|}^{2}}{\partial \phi_{i}})(\sum_{n=1}^{N} \left|z_{n}\right|^2\ln{\left|z_{n}\right|}^2)+\frac{\sum_{n=1}^{N} \frac{\partial}{\partial \phi_{i}}\left|z_{n}\right|^2\ln{\left|z_{n}\right|}^2}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}} \\
+& =-\frac{h}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}+\frac{(\sum_{n=1}^{N} h)(\sum_{n=1}^{N} \left|z_{n}\right|^2\ln{\left|z_{n}\right|}^2)}{(\sum_{n=1}^{N} {\left|z_{n}\right|}^{2})^2}-\frac{\sum_{n=1}^{N} h(1+\ln{\left|z_{n}\right|}^2)}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}\\
+& =\frac{(\sum_{n=1}^{N} h)(\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}\ln{\left|z_{n}\right|}^{2})}{(\sum_{n=1}^{N} {\left|z_{n}\right|}^{2})^{2}} - \frac{(\sum_{n=1}^{N} h(2+\ln{\left|z_{n}\right|}^{2})}{\sum_{n=1}^{N} {\left|z_{n}\right|}^{2}}
+\end{split}
+\end{equation}

@@ -15,10 +15,10 @@ in a circular aperture at 604 MHz bandwidth. For the following, we used
 $25^{\circ}$ of azimuth with about 119 pulses per degree from the eighth pass.
 As the available data set has been focused, we introduce phase errors in the
 form of zero mean white Gaussian noise with a standard deviation of $\pi$
-radians applied directly to each pulse in the phase history.
-Fig.~\ref{fig:efficacy} depicts the results: The ideal image is shown
-in~\subref{fig:ideal}, the noise-injected image in~\subref{fig:unfocused} and the
-result of focusing in~\subref{fig:focused}.
+radians applied directly to each pulse in the backprojected data
+per~\cite{ash2012autofocus}. Fig.~\ref{fig:efficacy} depicts the results: The
+ideal image is shown in~\subref{fig:ideal}, the noise-injected image
+in~\subref{fig:unfocused} and the result of focusing in~\subref{fig:focused}.
 
 \begin{figure}
   \centering
@@ -65,23 +65,34 @@ possessed 4 Intel i5 cores at 3.3 GHz.
 \subsubsection{Image Size}
 
 The first experiment sought to characterize the performance scalability as a
-function of input size. We measured the execution time as more degrees azimuth
-were swept added to the phase history. Fig.~\ref{fig:speedup} depicts the
-relative performance improvement for both the multithreaded CPU solution as well
-as the GPU based solution. As shown, the GPU solution consistently surpasses the
-CPU-only implementation until $9^{\circ}$ of azimuth or $1075$ pulses. Here, the
-memory bandwidth limitations of the GPU throttle the performance benefits of the
+function of input size. We measured the execution time as we increased the
+number of backprojected pulses. Fig.~\ref{fig:matlab} shows the performance for
+a reference MATLAB implementation. Fig.~\ref{fig:speedup} depicts the
+performance for both the multithreaded CPU solution as well as the GPU based
+solution. As shown, the GPU solution consistently surpasses the CPU-only
+implementation which both dramatically outperform the MATLAB code. This pattern
+exists until $9^{\circ}$ of azimuth or $1075$ pulses.  Here, the memory
+bandwidth limitations of the GPU throttle the performance benefits of the
 massively parallel architecture. On average, the multithreaded and GPU
-implementations achieved a speed up of nearly $32\times$ and $40\times$, respectively over
-the parallelized MATLAB implementation, with as high as $53\times$ and $82\times$ for select
-input sizes.
+implementations achieved a speed up of nearly $32\times$ and $40\times$,
+respectively over the parallelized MATLAB implementation, with as high as
+$53\times$ and $82\times$ for select input sizes.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{speedup.png}
-  \vspace{5 mm}
-  \caption{Speed up of the C++ and CUDA implementations as a function of pulses.}
-  \label{fig:speedup}
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{matlab.png}
+    \caption{Performance of gradient descent autofocus implemented in MATLAB.}
+    \label{fig:matlab}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{speedup.png}
+    \caption{Performance of gradient descent autofocus implemented in C++ and CUDA.}
+    \label{fig:speedup}
+  \end{subfigure}
 \end{figure}
 
 \subsubsection{Noise Tolerance}

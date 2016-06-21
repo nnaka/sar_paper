@@ -23,13 +23,29 @@ the minimum-entropy autofocus technique proposed in~\cite{kragh2006monotonic} by
 developing highly parallelized implementations of the gradient descent algorithm
 discussed.
 
-The remainder of this paper is organized as follows.
-Section~\ref{sec:relatedwork} details the related literature and provides
-context for this paper. Sections~\ref{sec:implementation} and~\ref{sec:results}
-describe the general implementation techniques and optimizations employed, and
-the performance results we obtained, respectively. Section~\ref{sec:futurework}
-discusses the need for continued optimizations and improvements. Finally, we
-conclude in the last section.
+The remainder of this paper is organized as follows. TBD
+% Section~\ref{sec:relatedwork} details the related literature and provides
+% context for this paper. Sections~\ref{sec:implementation} and~\ref{sec:results}
+% describe the general implementation techniques and optimizations employed, and
+% the performance results we obtained, respectively. Section~\ref{sec:futurework}
+% discusses the need for continued optimizations and improvements. Finally, we
+% conclude in the last section.
+
+\subsection{Related Work}
+
+SAR image processing is a computationally burdensome task. Many researchers have
+developed techniques to optimize both image formation and autofocus techniques.
+In particular, many papers have been written exploring optimizations to the
+image formation technique~\cite{yegulalp1999fast, hartley, liu, clemente, fasih, jin,
+park2013efficient}. Many use GPUs or multiple cores to achieve better
+performance. Significantly less work has been done on autofocus techniques.
+Passerone \textit{et al.} propose a CUDA based GPU implementation of two
+autofocus algorithms, Range-Doppler and $\omega$-k, with promising
+results~\cite{gpu-sar}. Other work, such as~\cite{less_mem_high_eff_autofocus},
+uses less of the image to obtain phase estimates. This reduces time and space
+complexity but at the cost of efficacy. The technique presented here continues
+in the direction set by Passerone by applying parallel architectures to a
+different autofocus technique: gradient descent.
 
 \subsection{Contributions}
 
